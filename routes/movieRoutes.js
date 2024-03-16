@@ -16,4 +16,10 @@ router.put(
   movieController.updateMovie
 );
 
+router.delete(
+  "/:id",
+  authenticateMiddleware,
+  movieController.deleteMovie
+);
+
 module.exports = router;

@@ -24,7 +24,19 @@ const updateMovie = async (movieId, body) => {
   }
 };
 
+const deleteMovie = async (movieId) => {
+  
+    try {
+        console.log("oihi", movieId)
+      const deleteMovie = await Movie.findByIdAndDelete(movieId);
+      return deleteMovie;
+    } catch (error) {
+      console.error("Error updating movie: ", error.message);
+    }
+  };
+
 module.exports = {
   createMovie,
   updateMovie,
+  deleteMovie
 };
