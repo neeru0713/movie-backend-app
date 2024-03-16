@@ -10,4 +10,10 @@ router.post(
   movieController.createMovie
 );
 
+router.put(
+  "/:id",
+  authenticateMiddleware,
+  movieController.updateMovie
+);
+
 module.exports = router;
