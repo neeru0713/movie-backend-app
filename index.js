@@ -1,12 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes.js");
+const movieRoutes = require("./routes/movieRoutes.js");
 
 const app = express();
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/movies", movieRoutes);
+
+mongoose
 
 mongoose
   .connect(
