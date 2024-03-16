@@ -22,4 +22,9 @@ router.delete(
   movieController.deleteMovie
 );
 
+router.get(
+  "/:id?",
+  movieController.getMovie
+);
+
 module.exports = router;

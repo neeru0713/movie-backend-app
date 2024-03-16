@@ -13,7 +13,6 @@ async function createMovie(body) {
   }
 }
 const updateMovie = async (movieId, body) => {
-  
   try {
     const updatedMovie = await Movie.findByIdAndUpdate(movieId, body, {
       new: true,
@@ -25,18 +24,34 @@ const updateMovie = async (movieId, body) => {
 };
 
 const deleteMovie = async (movieId) => {
-  
-    try {
-        console.log("oihi", movieId)
-      const deleteMovie = await Movie.findByIdAndDelete(movieId);
-      return deleteMovie;
-    } catch (error) {
-      console.error("Error updating movie: ", error.message);
+  try {
+    console.log("oihi", movieId);
+    const deleteMovie = await Movie.findByIdAndDelete(movieId);
+    return deleteMovie;
+  } catch (error) {
+    console.error("Error deleting movie: ", error.message);
+  }
+};
+
+const getMovie = async (movieId) => {
+  try {
+    let movie;
+
+    if (movieId) {
+      movie = await Movie.findOne({ _id: movieId });
+    } else {
+      movie = await Movie.find();
     }
-  };
+
+    return movie;
+  } catch (error) {
+    console.error("Error getting movie: ", error.message);
+  }
+};
 
 module.exports = {
   createMovie,
   updateMovie,
-  deleteMovie
+  deleteMovie,
+  getMovie,
 };
