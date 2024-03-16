@@ -8,10 +8,8 @@ const createMovie = async (req, res) => {
       res.status(201).json({ movie: newMovie });
     } 
       
-    
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
-
   }
 };
 

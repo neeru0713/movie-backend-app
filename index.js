@@ -11,8 +11,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/movies", movieRoutes);
 
 mongoose
-
-mongoose
   .connect(
     "mongodb+srv://neerurani1307:%40Neeru1307@neerucluster.z4krrc9.mongodb.net/movieBackendApp?retryWrites=true&w=majority",
     {
