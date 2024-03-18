@@ -34,14 +34,13 @@ const deleteMovie = async (movieId) => {
   }
 };
 
-const getMovie = async (movieId) => {
+const getMovie = async (movieId, filter) => {
   try {
     let movie;
-
     if (movieId) {
       movie = await Movie.findOne({ _id: movieId }).populate("reviews");
     } else {
-      movie = await Movie.find().populate("reviews");
+      movie = await Movie.find(filter).populate("reviews");
     }
 
     return movie;
@@ -84,21 +83,22 @@ const deleteReview = async (reviewId) => {
   }
 };
 
-const getReview = async (whichApi) => {
+const getReview = async (movieId, whichApi) => {
   try {
-    const review = await Review.find();
-    if(whichApi === 'avg'){
-        let totalRating = 0;
-        for (let i = 0; i < review.length; i++) {
-            totalRating += review[i].rating;
-        }
-        const averageRating = totalRating / review.length;
-        return averageRating;
+    const movie = await Movie.findOne({ _id: movieId }).populate("reviews");
+
+    const review = movie.reviews;
+
+    if (whichApi === "avg") {
+      let totalRating = 0;
+      for (let i = 0; i < review.length; i++) {
+        totalRating += review[i].rating;
+      }
+      const averageRating = totalRating / review.length;
+      return averageRating;
     } else {
-        return review;
+      return review;
     }
-   
-    
   } catch (error) {
     console.error("Error gettting Review : ", error.message);
   }

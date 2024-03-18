@@ -27,9 +27,10 @@ router.get(
   movieController.getMovie
 );
 
+
 router.post("/:id/reviews", authenticateMiddleware, movieController.createReview)
 router.put("/:id/reviews/:reviewId", authenticateMiddleware, movieController.updateReview)
-router.delete("/:id/reviews/:reviewId", authenticateMiddleware, movieController.deleteReview)
+router.delete("/:/rideviews/:reviewId", authenticateMiddleware, movieController.deleteReview)
 router.get("/:id/reviews", authenticateMiddleware, movieController.getReview)
 router.get("/:id/averageRating", authenticateMiddleware, movieController.getAverageRating)
 

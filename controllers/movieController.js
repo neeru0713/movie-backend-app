@@ -39,7 +39,20 @@ const deleteMovie = async (req, res) => {
 
 const getMovie = async (req, res) => {
   try {
-    let movie = await movieService.getMovie(req.params.id);
+    const { genre, releaseYear, director } = req.query;
+
+    const filter = {};
+    if (genre) {
+      filter.genre = genre;
+    }
+    if (releaseYear) {
+      filter.releaseYear = releaseYear;
+    }
+    if (director) {
+      filter.director = director;
+    }
+
+    let movie = await movieService.getMovie(req.params.id, filter);
     if (movie) {
       return res.status(200).json({ movie });
     }
@@ -83,37 +96,34 @@ const deleteReview = async (req, res) => {
   try {
     let deleteReview = await movieService.deleteReview(req.params.reviewId);
     if (!deleteReview) {
-        return res.status(404).json({ message: "Review not found" });
-      }
-      if (deleteReview) {
-        res.status(200).json({ Review: deleteReview });
-      }
+      return res.status(404).json({ message: "Review not found" });
+    }
+    if (deleteReview) {
+      res.status(200).json({ Review: deleteReview });
+    }
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const getReview = async (req, res) => {
-   
   try {
-    let review = await movieService.getReview();
+    let review = await movieService.getReview(req.params.id);
     if (review) {
-        return res.status(200).json({ review });
-      }
-      if (!review) {
-        return res.status(404).json({ message: "Review not found" });
-      }
+      return res.status(200).json({ review });
+    }
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const getAverageRating = async (req, res) => {
-    let averageRating = await movieService.getReview('avg');
-    return res.status(200).json({ averageRating });
-    
-}
-
+  let averageRating = await movieService.getReview(req.params.id, "avg");
+  return res.status(200).json({ averageRating });
+};
 
 module.exports = {
   createMovie,
@@ -124,5 +134,5 @@ module.exports = {
   updateReview,
   deleteReview,
   getReview,
-  getAverageRating
+  getAverageRating,
 };
